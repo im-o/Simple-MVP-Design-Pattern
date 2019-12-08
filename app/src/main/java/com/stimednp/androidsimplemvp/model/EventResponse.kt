@@ -1,4 +1,4 @@
-package com.stimednp.androidsimplemvp.data
+package com.stimednp.androidsimplemvp.model
 
 /**
  * Created by rivaldy on 12/5/2019.

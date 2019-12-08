@@ -10,4 +10,9 @@
         tools:listitem="@layout/item_list_event"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:id="@+id/progrress_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

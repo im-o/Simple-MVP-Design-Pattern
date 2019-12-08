@@ -1,6 +1,7 @@
 package com.stimednp.androidsimplemvp.network
 
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.stimednp.androidsimplemvp.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,9 +14,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
     val gson = GsonBuilder().setLenient().create()
-    val interceptor = HttpLoggingInterceptor().setLevel(if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE)
+//    val interceptor = HttpLoggingInterceptor().setLevel(if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE)
     private val tsdbClient = OkHttpClient().newBuilder()
-        .addInterceptor(interceptor)
+//        .addInterceptor(interceptor)
         .build()
 
     private fun myretrofit(): Retrofit{
@@ -23,6 +24,7 @@ object ApiClient {
             .baseUrl(BuildConfig.BASE_URL)
             .client(tsdbClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
     }
     val iRepository: ApiRepository = myretrofit()

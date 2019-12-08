@@ -1,12 +1,11 @@
 package com.stimednp.androidsimplemvp.adapter
 
-import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.stimednp.androidsimplemvp.R
-import com.stimednp.androidsimplemvp.data.EventItems
+import com.stimednp.androidsimplemvp.model.EventItems
 import kotlinx.android.synthetic.main.item_list_event.view.*
 
 /**

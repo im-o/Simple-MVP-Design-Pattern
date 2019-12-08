@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.stimednp.androidsimplemvp.R
 import com.stimednp.androidsimplemvp.adapter.MainAdapter
-import com.stimednp.androidsimplemvp.data.EventItems
-import com.stimednp.androidsimplemvp.data.EventResponse
-import com.stimednp.androidsimplemvp.repository.EventRepository
+import com.stimednp.androidsimplemvp.model.EventItems
+import com.stimednp.androidsimplemvp.presenter.RepositoryEvents
+import com.stimednp.androidsimplemvp.utils.invisible
+import com.stimednp.androidsimplemvp.utils.visible
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity(), IMainView {
     private lateinit var mainPresenter: MainPresenter
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity(), IMainView {
     }
 
     private fun initial() {
-        mainPresenter = MainPresenter(this, EventRepository())
+        mainPresenter = MainPresenter(this, RepositoryEvents())
         adapter = MainAdapter(events)
         rv_list_event.layoutManager = LinearLayoutManager(this)
         rv_list_event.adapter = adapter
@@ -35,30 +37,32 @@ class MainActivity : AppCompatActivity(), IMainView {
         mainPresenter.getEvent(id)
     }
 
-    override fun onShowLoading() {
-
-    }
-
-    override fun onHideLoading() {
-
-    }
-
-//    override fun onDataLoaded(data: EventResponse?) {
-//        val items: ArrayList<EventItems> = arrayListOf()
-//        for (i in data?.events?.indices!!) items.add(data.events[i])
-//        events.clear()
-//        events.addAll(items)
-//        adapter.notifyDataSetChanged()
-//    }
-
-    override fun onDataLoad(data: ArrayList<EventItems>) {
+    override fun onDataLoaded(data: ArrayList<EventItems>) {
+        onHideLoading()
+        onShowMessage("sukses load data")
         events.clear()
         events.addAll(data)
         adapter.notifyDataSetChanged()
-        e("INIII","HASILL NYA : "+data)
     }
 
-    override fun odDataError() {
+    override fun onDataError() {
+        onHideLoading()
+        onShowMessage("Gagal load data")
+        e("INIII","onDataError")
+    }
 
+    override fun onShowLoading() {
+        progrress_main.visible()
+        e("INIII","onShowLoading")
+    }
+
+    override fun onHideLoading() {
+        progrress_main.invisible()
+        e("INIII","onHideLoading")
+    }
+
+    override fun onShowMessage(msg: String) {
+        toast(msg)
+        e("INIII","onShowMessage")
     }
 }
